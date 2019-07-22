@@ -7,10 +7,7 @@
     <link rel="stylesheet" href="vendor/fontawesome/css/all.min.css"/>
 </head>
 <body>
-    <time id="datetime">
-        <span id="datetime-date"></span>
-        <span id="datetime-time"></span>
-    </time>
+    <time id="datetime"></time>
 
     <div id="users"></div>
 
@@ -28,6 +25,13 @@
         --><button id="login" type="submit"><i class="fas fa-angle-double-right"></i></button>
     </form>
 
+    <div id="sessions">
+        <button id="sessions-btn">
+            <i class="fas fa-window-restore"></i>
+            <span id="sessions-current"></span>
+        </button>
+    </div>
+
     <div id="power">
         <button id="power-suspend" title="Suspend"><i class="fas fa-moon"></i></button>
         <button id="power-hibernate" title="Hibernate"><i class="fas fa-snowflake"></i></button>
@@ -35,14 +39,17 @@
         <button id="power-shutdown" title="Shutdown"><i class="fas fa-power-off"></i></button>
     </div>
 
-    <script src="js/mock.js"></script>
+    <script src="vendor/mock.js"></script>
     <script src="js/obsidian.js"></script>
 
     <script>
-        window.addEventListener('load', () => {
-            const theme = new ObsidianTheme(window.lightdm);
+        /* apparently, no window.onload is needed, but the setTimeout is */
+        window.addEventListener('load', () => setTimeout(() => {
+            /* initialize the theme */
+            const theme = new ObsidianTheme();
             theme.init();
 
+            /* setup global keybindings */
             document.addEventListener('keydown', (evt) => {
                 if (evt.keyCode === 37 && evt.ctrlKey && evt.shiftKey) {
                     theme.selectLeft();
@@ -51,7 +58,7 @@
                     theme.selectRight();
                 }
             });
-        });
+        }));
     </script>
 </body>
 </html>

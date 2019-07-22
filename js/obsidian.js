@@ -2,17 +2,11 @@ function pad2 (n) {
     return n < 10 ? `0${n}` : `${n}`;
 }
 
-function formatDate (date) {
-    const year = date.getYear() + 1900;
-    const month = date.getMonth() + 1;
-    const day = date.getDate();
-    return `${year}-${pad2(month)}-${pad2(day)}`;
-}
-
-function formatTime (date) {
-    const hour = date.getHours();
-    const min = date.getMinutes();
-    return `${pad2(hour)}:${pad2(min)}`;
+function frmattedCurrentTime () {
+    if (window.theme_utils) return theme_utils.get_current_localized_time();
+    
+    const now = new Date();
+    return `${pad2(now.getHours())}:${pad2(now.getMinutes())}`;
 }
 
 window.ObsidianTheme = class ObsidianTheme {
@@ -37,6 +31,14 @@ window.ObsidianTheme = class ObsidianTheme {
 
         const passwdElem = document.getElementById('password');
         passwdElem.classList.remove('error');
+
+        this.updateSession();
+    }
+
+    updateSession () {
+        const session = lightdm.sessions.find(sess => sess.key === this.selectedUser.session) || lightdm.default_session;
+        const sessTextElem = document.getElementById('sessions-current');
+        sessTextElem.innerText = session.name || session.key;
     }
 
     selectLeft () {
@@ -77,16 +79,8 @@ window.ObsidianTheme = class ObsidianTheme {
     }
 
     updateDateTime () {
-        const date = new Date();
-
         const datetimeElem = document.getElementById('datetime');
-        datetimeElem.dateTime = date.toISOString();
-
-        const dateElem = document.getElementById('datetime-date');
-        dateElem.innerText = formatDate(date);
-
-        const timeElem = document.getElementById('datetime-time');
-        timeElem.innerText = formatTime(date);
+        datetimeElem.innerText = frmattedCurrentTime();
     }
 
     initPowerButtons () {
@@ -166,7 +160,6 @@ window.ObsidianTheme = class ObsidianTheme {
             setTimeout(updater, 60001 - (now % 60000));
         }
 
-    
         updater();
     }
 
