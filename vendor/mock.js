@@ -56,7 +56,7 @@ if (!('lightdm' in window)) {
             image: "https://cl.ly/VDXV/1756295270.jpg.x160.jpg",
             language: "en_US",
             layout: null,
-            session: null,
+            session: 'key1',
             logged_in: false
         },
         {
@@ -76,7 +76,7 @@ if (!('lightdm' in window)) {
             image: "",
             language: "en_US",
             layout: null,
-            session: null,
+            session: 'key2',
             logged_in: true
         }
     ];
