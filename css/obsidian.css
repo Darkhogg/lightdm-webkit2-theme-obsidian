@@ -1,0 +1,220 @@
+* {
+    box-sizing: border-box;
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    background-color: #221f22;
+    background-image: radial-gradient(#221d22, black);
+    color: white;
+}
+
+#datetime {
+    display: block;
+    position: absolute;
+
+    left: 0;
+    top: 0;
+}
+
+#datetime-date, #datetime-time {
+    display: inline-block;
+    font-size: 1rem;
+    font-weight: bold;
+    margin: 0.5rem;
+}
+
+#datetime-date {
+    color: rgba(255, 255, 255, 0.6);
+    font-family: sans;
+}
+
+#datetime-time {
+    color: rgba(255, 255, 255, 0.75);
+    font-family: monospace;
+}
+
+
+#users {
+    display: block;
+    position: absolute;
+    
+    left: 50%;
+    top: 20%;
+
+    overflow: visible;
+
+    transition-duration: 150ms;
+    transition-timing-function: ease-out;
+    transition-property: margin;
+}
+
+.user {
+    display: inline-block;
+    position: relative;
+    top: 0;
+
+    margin: 1rem;
+    opacity: 0.4;
+
+    transition-duration: 100ms;
+    transition-timing-function: ease-out;
+    transition-property: opacity;
+
+    overflow: visible;
+}
+
+.user:hover {
+    opacity: 0.7;
+}
+
+.user.selected, .user.selected:hover {
+    opacity: 1;
+}
+
+
+.user-select {
+    display: block;
+
+    margin: 0;
+    padding: 0;
+    border-width: 0;
+    background-color: transparent;
+
+    cursor: pointer;
+    height: 10rem;
+}
+
+.user-image {
+    border-radius: 50%;
+
+    width: 7rem;
+    height: 7rem;
+
+    transition-duration: 150ms;
+    transition-timing-function: ease-out;
+    transition-property: width height margin;
+}
+.selected .user-image {
+    width: 10rem;
+    height: 10rem;
+}
+
+.user-name {
+    display: block;
+    width: 100%;
+
+    position: relative;
+    top: -1rem;
+
+    text-align: center;
+    font-family: sans;
+    opacity: 0;
+
+    transition-duration: 150ms;
+    transition-timing-function: ease-out;
+    transition-property: font-size opacity top;
+}
+.user:hover .user-name {
+    opacity: .6;
+}
+.user.selected .user-name {
+    opacity: 1;
+    
+    top: 2rem;
+    font-size: 130%;
+}
+
+
+#password-form {
+    position: absolute;
+
+    left: 0;
+    right: 0;
+    top: 60%;
+
+    text-align: center;
+}
+
+#password, #login {
+    background: rgba(255, 190, 255, 5%);
+    color: rgba(255, 190, 255, 50%);
+
+    border: 1px solid rgba(255, 190, 255, 30%);
+    border-radius: 0.33rem;
+
+    padding: 0.25rem 0.5rem;
+}
+#password:disabled {
+    background: rgba(255, 190, 255, 1%);
+    color: rgba(255, 190, 255, 20%);
+}
+
+#password {
+    margin-right: 0;
+    border-right-width: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+
+    transition-duration: 150ms;
+    transition-timing-function: ease-out;
+    transition-property: border-color background-color color;
+}
+#password.error {
+    animation: shake 0.2s ease-in-out 0s 2;
+    border-color: #f77;
+    color: #f77;
+    background-color: rgba(255, 100, 100, 10%);
+}
+
+#login {
+    margin-left: 0;
+    border-left-width: 0;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+
+    cursor: pointer;
+}
+#login:hover {
+    color: rgba(255, 230, 255, 70%);
+    background: rgba(255, 190, 255, 15%);
+}
+
+
+#power {
+    display: block;
+    position: absolute;
+
+    top: 0;
+    right: 0;
+
+    margin: 0.5rem;
+}
+
+#power button {
+    background-color: rgba(255, 210, 255, 0.1);
+    color: rgba(255, 255, 255, 0.8);
+
+    border-width: 0;
+    border-radius: 0.3rem;
+
+    padding: 0.5rem 1rem;
+
+    cursor: pointer;
+}
+
+#power button:hover {
+    background-color: rgba(255, 200, 255, 0.3);
+    color: white;
+}
+
+
+@keyframes shake {
+    0% { margin-left: 0rem; }
+    25% { margin-left: 1rem; }
+    75% { margin-left: -1rem; }
+    100% { margin-left: 0rem; }
+  }

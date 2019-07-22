@@ -1,0 +1,57 @@
+<!doctype html>
+<html>
+<head>
+    <title>Obsidian Theme</title>
+
+    <link rel="stylesheet" href="css/obsidian.css"/>
+    <link rel="stylesheet" href="vendor/fontawesome/css/all.min.css"/>
+</head>
+<body>
+    <time id="datetime">
+        <span id="datetime-date"></span>
+        <span id="datetime-time"></span>
+    </time>
+
+    <div id="users"></div>
+
+    <template id="tpl-user">
+        <div class="user">
+            <button class="user-select">
+                <img class="user-image"/>
+            </button>
+            <span class="user-name"></span>
+        </div>
+    </template>
+
+    <form id="password-form" name="password-form">
+        <input id="password" type="password" placeholder="Password" disabled/><!--
+        --><button id="login" type="submit"><i class="fas fa-angle-double-right"></i></button>
+    </form>
+
+    <div id="power">
+        <button id="power-suspend" title="Suspend"><i class="fas fa-moon"></i></button>
+        <button id="power-hibernate" title="Hibernate"><i class="fas fa-snowflake"></i></button>
+        <button id="power-restart" title="Restart"><i class="fas fa-redo"></i></button>
+        <button id="power-shutdown" title="Shutdown"><i class="fas fa-power-off"></i></button>
+    </div>
+
+    <script src="js/mock.js"></script>
+    <script src="js/obsidian.js"></script>
+
+    <script>
+        window.addEventListener('load', () => {
+            const theme = new ObsidianTheme(window.lightdm);
+            theme.init();
+
+            document.addEventListener('keydown', (evt) => {
+                if (evt.keyCode === 37 && evt.ctrlKey && evt.shiftKey) {
+                    theme.selectLeft();
+                }
+                if (evt.keyCode === 39 && evt.ctrlKey && evt.shiftKey) {
+                    theme.selectRight();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
