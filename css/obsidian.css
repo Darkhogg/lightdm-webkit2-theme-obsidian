@@ -164,6 +164,36 @@ body {
     font-size: 130%;
 }
 
+.user-logged-in {
+    display: none;
+    position: absolute;
+    left: 0rem;
+    top: 0rem;
+
+    font-size: 0.85rem;
+    line-height: 1.75rem;
+    text-align: center;
+
+    background-color: #777;
+    color: white;
+    border-radius: 50%;
+
+    width: 1.75rem;
+    height: 1.75rem;
+
+    transition-duration: 150ms;
+    transition-timing-function: ease-out;
+    transition-property: left top;
+}
+.logged-in .user-logged-in {
+    display: block;
+}
+
+.selected .user-logged-in {
+    left: 0.667rem;
+    top: 0.667rem;
+}
+
 
 #password-form {
     position: absolute;

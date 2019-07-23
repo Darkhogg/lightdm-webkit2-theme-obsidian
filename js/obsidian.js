@@ -76,6 +76,9 @@ window.ObsidianTheme = class ObsidianTheme {
             if (user.name === firstUser) {
                 userElem.classList.add('selected');
             }
+            if (user.logged_in) {
+                userElem.classList.add('logged-in');
+            }
 
             const userImgWrapElem = userElem.querySelector('.user-image-wrap');
             userImgWrapElem.style.backgroundColor = userColor(user.name);
