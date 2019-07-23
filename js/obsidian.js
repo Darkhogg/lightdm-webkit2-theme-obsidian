@@ -114,7 +114,8 @@ window.ObsidianTheme = class ObsidianTheme {
 
         const powerMenuElem = document.getElementById('power-menu');
         powerMenuElem.addEventListener('mouseleave', () => {
-           powerElem.classList.remove('open');
+            powerElem.classList.remove('open');
+            this.focusPasswordField();
         });
 
 
@@ -145,11 +146,16 @@ window.ObsidianTheme = class ObsidianTheme {
         });
     }
 
+    focusPasswordField () {
+        const passwdElem = document.getElementById('password');
+        passwdElem.focus();
+    }
+
     activatePasswordField () {
         const passwdElem = document.getElementById('password');
         passwdElem.disabled = false;
         passwdElem.value = '';
-        passwdElem.focus();
+        this.focusPasswordField();
     }
 
     disablePasswordField () {
