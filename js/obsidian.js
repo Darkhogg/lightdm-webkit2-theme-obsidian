@@ -9,6 +9,15 @@ function frmattedCurrentTime () {
     return `${pad2(now.getHours())}:${pad2(now.getMinutes())}`;
 }
 
+function userColor (str) {
+    let rand = 0;
+    for (const char of str) {
+        rand = char.charCodeAt(0) + ((rand << 5) - rand);
+    }
+    const deg = ((rand % 360) + 360) % 360;
+    return `hsl(${deg}, 70%, 60%)`;
+}
+
 window.ObsidianTheme = class ObsidianTheme {
     selectUser (username) {
         const userIdx = lightdm.users.findIndex(user => user.name === username);
@@ -53,20 +62,29 @@ window.ObsidianTheme = class ObsidianTheme {
         this.selectUser(lightdm.users[nextIdx].name);
     }
 
-    buildUserList () {
+    buildUserList (firstUser) {
         const userListElem = document.getElementById('users');
         while (userListElem.firstChild) {
             userListElem.firstChild.remove();
         }
 
-        const tpl = document.getElementById('tpl-user')
-        for (const user of lightdm.users) {
+        const tpl = document.getElementById('tpl-user');
+        lightdm.users.forEach((user, idx) => {
             const fragment = document.importNode(tpl.content, true);
             const userElem = fragment.querySelector('.user');
             userElem.id = `user-${user.name}`;
+            if (user.name === firstUser) {
+                userElem.classList.add('selected');
+            }
+
+            const userImgWrapElem = userElem.querySelector('.user-image-wrap');
+            userImgWrapElem.style.backgroundColor = userColor(user.name);
 
             const userImgElem = userElem.querySelector('.user-image');
-            userImgElem.src = user.image || 'img/user.png';
+            userImgElem.src = user.image;
+
+            const userInitial = userElem.querySelector('.user-initial');
+            userInitial.innerText = user.name[0].toUpperCase();
 
             const userNameElem = userElem.querySelector('.user-name');
             userNameElem.innerText = user.display_name || user.name;
@@ -75,7 +93,7 @@ window.ObsidianTheme = class ObsidianTheme {
             userSelectElem.addEventListener('click', () => this.selectUser(user.name));
 
             userListElem.appendChild(fragment);
-        }
+        });
     }
 
     updateDateTime () {
@@ -84,6 +102,19 @@ window.ObsidianTheme = class ObsidianTheme {
     }
 
     initPowerButtons () {
+        const powerElem = document.getElementById('power');
+
+        const powerBtnElem = document.getElementById('power-trigger');
+        powerBtnElem.addEventListener('click', () => {
+            powerElem.classList.add('open');
+        });
+
+        const powerMenuElem = document.getElementById('power-menu');
+        powerMenuElem.addEventListener('mouseleave', () => {
+           powerElem.classList.remove('open');
+        });
+
+
         for (const action of ['suspend', 'hibernate', 'restart', 'shutdown']) {
             const elem = document.getElementById(`power-${action}`);
             if (lightdm[`can_${action}`]) {
@@ -165,9 +196,10 @@ window.ObsidianTheme = class ObsidianTheme {
 
     init () {
         console.log('=== [Obsidian Theme] ===');
+        const firstUser = lightdm.authentication_user || lightdm.select_user_hint || lightdm.users[0].name;
 
         this.initDateTimeUpdater();
-        this.buildUserList();
+        this.buildUserList(firstUser);
         this.initPowerButtons();
         this.initPasswordForm();
 
@@ -175,6 +207,6 @@ window.ObsidianTheme = class ObsidianTheme {
         window.show_error = (...args) => this.onError(...args);
         window.authentication_complete = (...args) => this.onAuth(...args);
 
-        this.selectUser(lightdm.authentication_user || lightdm.select_user_hint || lightdm.users[0].name);
+        this.selectUser(firstUser);
     }
 };

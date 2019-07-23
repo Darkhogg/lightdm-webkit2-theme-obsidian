@@ -14,7 +14,10 @@
     <template id="tpl-user">
         <div class="user">
             <button class="user-select">
-                <img class="user-image"/>
+                <div class="user-image-wrap">
+                    <span class="user-initial"></span>
+                    <img class="user-image"/>
+                </div>
             </button>
             <span class="user-name"></span>
         </div>
@@ -33,14 +36,20 @@
     </div>
 
     <div id="power">
-        <button id="power-suspend" title="Suspend"><i class="fas fa-moon"></i></button>
-        <button id="power-hibernate" title="Hibernate"><i class="fas fa-snowflake"></i></button>
-        <button id="power-restart" title="Restart"><i class="fas fa-redo"></i></button>
-        <button id="power-shutdown" title="Shutdown"><i class="fas fa-power-off"></i></button>
+        <div id="power-trigger">
+            <button id="power-trigger-btn"><i class="fas fa-cog"></i></button>
+        </div>
+
+        <div id="power-menu">
+            <button id="power-suspend" title="Suspend">Suspend <i class="fas fa-fw fa-moon"></i></button>
+            <button id="power-hibernate" title="Hibernate">Hibernate <i class="fas fa-fw fa-snowflake"></i></button>
+            <button id="power-restart" title="Restart">Restart <i class="fas fa-fw fa-redo"></i></button>
+            <button id="power-shutdown" title="Shutdown">Shutdown <i class="fas fa-fw fa-power-off"></i></button>
+        </div>
     </div>
 
-    <script src="vendor/mock.js"></script>
     <script src="js/obsidian.js"></script>
+    <script src="vendor/mock.js"></script>
 
     <script>
         /* apparently, no window.onload is needed, but the setTimeout is */
