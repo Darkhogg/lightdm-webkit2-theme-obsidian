@@ -29,23 +29,29 @@
         --><button id="login" type="submit"><i class="fas fa-angle-double-right"></i></button>
     </form>
 
-    <div id="sessions">
-        <button id="sessions-btn">
-            <i class="fas fa-window-restore"></i>
+    <div id="sessions" class="menu">
+        <div id="sessions-trigger" class="menu-trigger">
+            <button id="sessions-btn"><i class="fas fa-window-restore"></i></button>
             <span id="sessions-current"></span>
-        </button>
+        </div>
+
+        <div id="sessions-menu" class="menu-items">
+            <template id="tpl-session">
+                <button><i class="fas fa-fw fa-chevron-right"></i> <span></span></button>
+            </template>
+        </div>
     </div>
 
-    <div id="power">
-        <div id="power-trigger">
+    <div id="power" class="menu">
+        <div id="power-trigger" class="menu-trigger">
             <button id="power-trigger-btn"><i class="fas fa-cog"></i></button>
         </div>
 
-        <div id="power-menu">
-            <button id="power-suspend" title="Suspend">Suspend <i class="fas fa-fw fa-moon"></i></button>
-            <button id="power-hibernate" title="Hibernate">Hibernate <i class="fas fa-fw fa-snowflake"></i></button>
-            <button id="power-restart" title="Restart">Restart <i class="fas fa-fw fa-redo"></i></button>
-            <button id="power-shutdown" title="Shutdown">Shutdown <i class="fas fa-fw fa-power-off"></i></button>
+        <div id="power-menu" class="menu-items">
+            <button id="power-suspend">Suspend <i class="fas fa-fw fa-moon"></i></button>
+            <button id="power-hibernate">Hibernate <i class="fas fa-fw fa-snowflake"></i></button>
+            <button id="power-restart">Restart <i class="fas fa-fw fa-redo"></i></button>
+            <button id="power-shutdown">Shutdown <i class="fas fa-fw fa-power-off"></i></button>
         </div>
     </div>
 

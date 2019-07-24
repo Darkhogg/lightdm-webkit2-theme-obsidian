@@ -41,13 +41,14 @@ window.ObsidianTheme = class ObsidianTheme {
         const passwdElem = document.getElementById('password');
         passwdElem.classList.remove('error');
 
-        this.updateSession();
+        this.selectSession(user.session || lightdm.default_session.key);
     }
 
-    updateSession () {
-        const session = lightdm.sessions.find(sess => sess.key === this.selectedUser.session) || lightdm.default_session;
+    selectSession (sessKey) {
+        this.selectedSession = lightdm.sessions.find(sess => sess.key === sessKey);
+
         const sessTextElem = document.getElementById('sessions-current');
-        sessTextElem.innerText = session.name || session.key;
+        sessTextElem.innerText = this.selectedSession.name || this.selectedSession.key;
     }
 
     selectLeft () {
@@ -104,21 +105,42 @@ window.ObsidianTheme = class ObsidianTheme {
         datetimeElem.innerText = frmattedCurrentTime();
     }
 
+    initMenus () {
+        document.querySelectorAll('.menu').forEach((menu) => {
+            const trigger = menu.querySelector('.menu-trigger');
+            trigger.addEventListener('click', () => {
+                menu.classList.add('open');
+            });
+
+            const items = menu.querySelector('.menu-items');
+            items.addEventListener('mouseleave', () => {
+                menu.classList.remove('open');
+                this.focusPasswordField();
+            });
+        });
+    }
+
+    initSessionMenu () {
+        const sessionsListElem = document.getElementById('sessions-menu');
+
+        const tpl = document.getElementById('tpl-session');
+        lightdm.sessions.forEach((sess) => {
+            const fragment = document.importNode(tpl.content, true);
+
+            const btnElem = fragment.querySelector('button');
+            btnElem.querySelector('span').innerText = sess.name;
+            btnElem.addEventListener('click', () => {
+                this.selectSession(sess.key);
+                document.getElementById('sessions').classList.remove('open');
+                this.focusPasswordField();
+            });
+
+            sessionsListElem.appendChild(fragment);
+        });
+
+    }
+
     initPowerButtons () {
-        const powerElem = document.getElementById('power');
-
-        const powerBtnElem = document.getElementById('power-trigger');
-        powerBtnElem.addEventListener('click', () => {
-            powerElem.classList.add('open');
-        });
-
-        const powerMenuElem = document.getElementById('power-menu');
-        powerMenuElem.addEventListener('mouseleave', () => {
-            powerElem.classList.remove('open');
-            this.focusPasswordField();
-        });
-
-
         for (const action of ['suspend', 'hibernate', 'restart', 'shutdown']) {
             const elem = document.getElementById(`power-${action}`);
             if (lightdm[`can_${action}`]) {
@@ -182,7 +204,7 @@ window.ObsidianTheme = class ObsidianTheme {
         console.log(' * auth complete: %s', lightdm.is_authenticated)
 
         if (lightdm.is_authenticated) {
-            lightdm.login(this.selectedUser.name, lightdm.sessions[0].key);
+            lightdm.login(this.selectedUser.name, this.selectedSession.key);
     
         } else {
             this.selectUser(this.selectedUser.name);
@@ -210,6 +232,8 @@ window.ObsidianTheme = class ObsidianTheme {
         this.initDateTimeUpdater();
         this.buildUserList(firstUser);
         this.initPowerButtons();
+        this.initSessionMenu();
+        this.initMenus();
         this.initPasswordForm();
 
         window.show_prompt = (...args) => this.onPrompt(...args);
