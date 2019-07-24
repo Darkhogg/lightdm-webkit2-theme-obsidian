@@ -80,20 +80,14 @@ window.ObsidianTheme = class ObsidianTheme {
                 userElem.classList.add('logged-in');
             }
 
-            const userImgWrapElem = userElem.querySelector('.user-image-wrap');
-            userImgWrapElem.style.backgroundColor = userColor(user.name);
-
             const userImgElem = userElem.querySelector('.user-image');
             userImgElem.src = user.image;
+            userImgElem.addEventListener('error', () => userImgElem.style.display = 'none');
 
-            const userInitial = userElem.querySelector('.user-initial');
-            userInitial.innerText = user.name[0].toUpperCase();
-
-            const userNameElem = userElem.querySelector('.user-name');
-            userNameElem.innerText = user.display_name || user.name;
-
-            const userSelectElem = userElem.querySelector('.user-select');
-            userSelectElem.addEventListener('click', () => this.selectUser(user.name));
+            userElem.querySelector('.user-image-wrap').style.backgroundColor = userColor(user.name);
+            userElem.querySelector('.user-initial').innerText = user.name[0].toUpperCase();
+            userElem.querySelector('.user-name').innerText = user.display_name || user.name;
+            userElem.querySelector('.user-select').addEventListener('click', () => this.selectUser(user.name));
 
             userListElem.appendChild(fragment);
         });
