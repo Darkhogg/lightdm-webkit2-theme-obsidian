@@ -289,7 +289,6 @@ body {
 
     padding: 0.55rem 0.5rem;
     margin: 0.1rem 0;
-    width: 9rem;
 
     font-size: 1.1rem;
 
@@ -323,6 +322,7 @@ body {
 
 #sessions-menu button {
     text-align: left;
+    width: 15rem;
 }
 
 #sessions-menu button i {
@@ -360,6 +360,7 @@ body {
 
 #power-menu button {
     text-align: right;
+    width: 9rem;
 }
 
 #power-menu button i {
