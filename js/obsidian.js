@@ -38,8 +38,7 @@ window.ObsidianTheme = class ObsidianTheme {
         const remOffset = (userIdx * -9) - 6;
         document.getElementById('users').style.marginLeft = `${remOffset}rem`;
 
-        const passwdElem = document.getElementById('password');
-        passwdElem.classList.remove('error');
+        const passwdElem = document.getElementById('password-form').classList.remove('error');
 
         this.selectSession(user.session || lightdm.default_session.key);
     }
@@ -163,7 +162,7 @@ window.ObsidianTheme = class ObsidianTheme {
             lightdm.provide_secret(passwdElem.value);
 
             passwdElem.addEventListener('keypress', () => {
-                passwdElem.classList.remove('error');
+                formElem.classList.remove('error');
             });
         });
     }
@@ -195,7 +194,19 @@ window.ObsidianTheme = class ObsidianTheme {
     }
 
     onError (error) {
-        console.error(error);
+        console.error(' ~> ERROR: %s', error);
+
+        const errorsElem = document.getElementById('errors');
+
+        const tpl = document.getElementById('tpl-error');
+        const fragment = document.importNode(tpl.content, true).firstElementChild;
+
+        fragment.querySelector('.error-message').innerText = error;
+        fragment.querySelector('.error-close').addEventListener('click', () => errorsElem.removeChild(fragment));
+
+        errorsElem.appendChild(fragment);
+
+        setTimeout(() => errorsElem.removeChild(fragment), 15000);
     }
 
     onAuth (args) {
@@ -208,9 +219,7 @@ window.ObsidianTheme = class ObsidianTheme {
     
         } else {
             this.selectUser(this.selectedUser.name);
-
-            const passwdElem = document.getElementById('password');
-            passwdElem.classList.add('error');
+            document.getElementById('password-form').classList.add('error');
         }
     }
 

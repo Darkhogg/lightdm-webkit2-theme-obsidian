@@ -34,6 +34,39 @@ body {
 }
 
 
+#errors {
+    width: 50rem;
+
+    margin: 0 auto;
+}
+
+#errors .error {
+    position: relative;
+
+    width: 100%;
+
+    background-color: rgba(255, 127, 0, 0.5);
+    border: 1px solid #f70;
+    border-radius: 0.333rem;
+
+    margin: 0.5rem;
+    padding: 0.5rem;
+}
+
+#errors .error-message {
+    color: #ffb;
+}
+
+#errors .error-close {
+    position: absolute;
+
+    top: 0.25rem;
+    right: 0.5rem;
+
+    color: rgba(255, 255, 200, 0.8);
+}
+
+
 #users {
     display: block;
     position: absolute;
@@ -225,13 +258,16 @@ body {
     border-right-width: 0;
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
-
+}
+#password, #login {
     transition-duration: 150ms;
     transition-timing-function: ease-out;
     transition-property: border-color background-color color;
 }
-#password.error {
+form.error {
     animation: shake 0.2s ease-in-out 0s 2;
+}
+.error #password, .error #login {
     border-color: #f77;
     color: #f77;
     background-color: rgba(255, 100, 100, 10%);
