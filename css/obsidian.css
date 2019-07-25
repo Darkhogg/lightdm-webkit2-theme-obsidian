@@ -198,7 +198,7 @@ body {
     font-size: 130%;
 }
 .logged-in .user-image-wrap {
-    box-shadow: .5px 0 2px 1px black, .5px 0 3px 5px white;
+    box-shadow: 0px 0 2px 1px black, 0px 0 3px 5px white;
 }
 
 
@@ -218,6 +218,8 @@ body {
 
     border: 1px solid rgba(255, 190, 255, 30%);
     border-radius: 0.33rem;
+
+    font-size: 2.25vmin;
 
     padding: 0.25rem 0.5rem;
 }
